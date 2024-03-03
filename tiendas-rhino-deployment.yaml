@@ -1,0 +1,38 @@
+#RUDY 483#
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rudy483-deployment
+  namespace: tiendas-rhino
+  labels:
+    app: rudy483
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rudy483
+  template:
+    metadata:
+      labels:
+        app: rudy483
+    spec:
+      containers:
+      - name: rudy483
+        image: southamerica-east1-docker.pkg.dev/diesel-talon-387022/tienda-rhino-rudy/tienda-rhino-rudy:9ee2ba47af7a7aa22f2ecbb479137c7c166ec515
+        imagePullPolicy: Always
+        env:
+          - name: ESTILO_PRODUCTOS
+            value: image_min
+          - name: NEXT_PUBLIC_SUCURSAL_ID
+            value: "483"
+          - name: NEXT_PUBLIC_API_TIENDA_ENDPOINT
+            value: "http://apitiendadev.rhinox.io/v1/tienda"
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
